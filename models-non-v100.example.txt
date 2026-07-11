@@ -1,0 +1,54 @@
+# =====================================================================
+# NON-VIABLE — PARKED ARCHIVE — template
+# Parked here so you don't re-research why these are excluded on YOUR
+# hardware. Do NOT mirror anything in this file. Adjust the buckets
+# below to match your actual GPU generation — the categories here are
+# written for Volta (V100), which lacks FP8/FP4 tensor cores and Marlin
+# kernel support; an Ampere+ or Hopper+ rig would exclude a different set.
+#
+# Common exclusion buckets (edit to match your hardware):
+#   - FP8/NVFP4/MXFP8/MXFP4: needs Hopper/Blackwell tensor cores — skip
+#     entirely on anything older, unless your serving engine adds a
+#     software-emulated path (slower, but not a hard blocker — note
+#     which engine/version if you rely on this).
+#   - MLX: Apple Silicon only, irrelevant to a Linux/CUDA rig.
+#   - EXL2/EXL3: ExLlama's fast paths need Ampere+; works on older cards
+#     but loses most of the speed advantage vs GGUF.
+#   - AWQ/GPTQ + Marlin-kernel-only distributions: Marlin requires
+#     Ampere+ tensor cores. Distinguish this from AWQ/GPTQ quants served
+#     via a non-Marlin kernel path (e.g. LMDeploy's TurboMind), which
+#     may still work fine on older cards — check your serving engine's
+#     docs before assuming AWQ/GPTQ is a blanket no.
+#   - ONNX/LiteRT: mobile/edge/DirectML targets, not a server rig.
+#   - Unsupported/too-new architectures: no support confirmed yet in
+#     your serving engine(s) of choice.
+# Format: RepoID  # reason
+#
+# TIERS don't apply in this file — everything below is excluded by
+# FORMAT regardless of size. See models.txt for the tier ladder.
+#
+# Verified against huggingface.co, <date>.
+# =====================================================================
+
+# ── FP8/NVFP4/MLX examples ──
+# <org>/<model>-FP8                             # EXAMPLE — needs Hopper+ tensor cores
+# <org>/<model>-NVFP4                           # EXAMPLE — needs Blackwell
+# <org>/<model>-MLX-4bit                        # EXAMPLE — Apple Silicon only
+
+# ── EXL2/EXL3 examples ──
+# <org>/<model>-exl3                            # EXAMPLE — works but loses most of the speed benefit vs GGUF on pre-Ampere cards
+
+# ── Marlin-only AWQ/GPTQ examples ──
+# <org>/<model>-AWQ                             # EXAMPLE — confirm whether this specific quant is Marlin-only before assuming it's excluded; some AWQ/GPTQ repos work fine via non-Marlin kernels
+
+# ── Duplicates / superseded ──
+# Note here if a source list you imported from repeats entries across
+# multiple "priority tier" tables — no separate action needed once the
+# entry is correctly tiered once in models.txt.
+
+# ── Custom exclusion bucket example: provenance/policy concerns ──
+# If part of your workflow tracks models with questionable training-data
+# claims (e.g. undocumented "distilled from a frontier model" branding),
+# park those here too with the claim you couldn't verify, rather than
+# silently dropping them:
+# <uploader>/<model>-claimed-distill            # claims distillation from <frontier model> — no documented training data found, treat as unverified marketing

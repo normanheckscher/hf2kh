@@ -1,0 +1,86 @@
+# =====================================================================
+# MAIN SERVING QUEUE — template
+# EDIT THE HARDWARE LINE BELOW to describe your own rig, then redo the
+# tier GB math to match. This example is written for 4x V100 32GB SXM2
+# (128GB aggregate VRAM) — copy the pattern, not the numbers, if your
+# box is different.
+#
+# Every repo below should have a real serving path on YOUR hardware:
+# GGUF/llama.cpp, AWQ-GPTQ W4A16/LMDeploy, or native FP16/BF16 fit.
+# GGUF companion + recommended quant tag for each entry: models-gguf.txt
+# Format: RepoID  # tier | arch | ~GB @ rec. quant | engine | note
+#
+# TIERS = TOTAL parameter footprint, not active params. MoE experts all
+# have to be VRAM-resident for full-speed serving, so a 106B-total/
+# 12B-active MoE tiers like a 106B dense model, not a 12B model.
+#   Tier 1: fits 1x GPU              (adjust GB threshold to your card)
+#   Tier 2: fits 2x GPU
+#   Tier 3: fits the full node
+#   Tier 4: doesn't fit even at Q4 on this rig — kept commented out,
+#           archive later / requantize later
+#
+# Keep a "verified against huggingface.co, <date>" line here and update
+# it whenever you re-check the list — repo names and recommended quants
+# drift as uploaders rename/reorganize. Note anything corrected or
+# newly added inline, next to the entry, so the trail stays in the file
+# itself rather than a separate doc that can go stale.
+# =====================================================================
+
+# =====================================================================
+# PRIORITY FAMILY — put whatever model family you care about most here,
+# newest generation first. Example below uses Qwen3 sizes as a stand-in.
+# =====================================================================
+
+# ── Tier 1 ──
+Qwen/Qwen3-8B                                   # T1 | dense | ~5GB Q4 | llama.cpp/LMDeploy | EXAMPLE — replace with your own priority pick(s)
+Qwen/Qwen3-30B-A3B                              # T1 | MoE 30B total/3B active | ~20GB Q4 | llama.cpp/LMDeploy | EXAMPLE
+
+# =====================================================================
+# ABLITERATED / UNCENSORED — optional section if that's part of your
+# workflow. Delete this whole block if it isn't relevant to you.
+# =====================================================================
+
+# ── Tier 1 ──
+# <uploader>/<model>-abliterated                # T1 | dense abliterated | ~GB Q4 | llama.cpp | note curator + method if known
+
+# =====================================================================
+# CODING
+# =====================================================================
+
+# ── Tier 1 ──
+Qwen/Qwen2.5-Coder-7B-Instruct                  # T1 | dense | ~5GB Q4 | llama.cpp/LMDeploy | EXAMPLE — AWQ: Qwen/Qwen2.5-Coder-7B-Instruct-AWQ (official)
+mistralai/Codestral-22B-v0.1                    # T1 | dense | ~14GB Q4 | llama.cpp/LMDeploy | EXAMPLE — check license terms before use
+
+# ── Tier 4 (commented out — flagship, too large for this rig) ──
+# <org>/<huge-coder-model>                      # T4 | MoE XXXB total/YYB active | doesn't fit even at Q4 | note why it's archived
+
+# =====================================================================
+# GENERAL / REASONING — newest generation of each family first
+# =====================================================================
+
+# ── Tier 1 ──
+meta-llama/Llama-3.1-8B-Instruct                # T1 | dense | ~5GB Q4 | llama.cpp/LMDeploy | EXAMPLE — AWQ: hugging-quants/Meta-Llama-3.1-8B-Instruct-AWQ-INT4
+microsoft/Phi-4                                 # T1 | dense 14B | ~9GB Q4 | llama.cpp/LMDeploy | EXAMPLE — AWQ: stelterlab/phi-4-AWQ
+
+# ── Tier 2 ──
+meta-llama/Llama-3.3-70B-Instruct               # T2 | dense | ~46GB Q4 | llama.cpp/LMDeploy | EXAMPLE — AWQ: casperhansen/llama-3.3-70b-instruct-awq
+
+# ── Tier 3 ──
+# <org>/<model>                                 # T3 | fits the full node | ~GB Q4 | llama.cpp/LMDeploy | note AWQ repo if one exists
+
+# ── Tier 4 (commented out — doesn't fit even at Q4, archive for later) ──
+# <org>/<flagship-model>                        # T4 | note total size / why excluded
+
+# =====================================================================
+# VISION-LANGUAGE (VLM) — if you keep VLMs in a separate file
+# (models-vlm.txt), just note that here instead of duplicating entries.
+# =====================================================================
+
+# See models-vlm.txt for the vision/multimodal queue.
+
+# =====================================================================
+# Formats/duplicates/unconfirmed items intentionally EXCLUDED from this
+# file belong in models-non-v100.txt (or your own equivalent "why this
+# doesn't work on my hardware" parking file) — keep the reasoning next
+# to the excluded entry so you don't re-research it every time.
+# =====================================================================

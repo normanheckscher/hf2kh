@@ -1,0 +1,40 @@
+# =====================================================================
+# VISION & MULTIMODAL MODELS — template
+# Every repo below should have a real serving path on your hardware:
+# GGUF/llama.cpp (needs a companion mmproj file unless noted "no
+# separate mmproj"/natively multimodal). If your serving engine also
+# supports an AWQ/quantized-serving path (e.g. LMDeploy), note the AWQ
+# repo inline rather than duplicating entries into a separate file.
+# Format: RepoID · quant  # notes (Tier | Arch | VRAM | Engine | Details)
+#
+# TIERS = TOTAL parameter footprint (including all MoE experts) — same
+# ladder as models.txt. Adjust the GB thresholds to your own VRAM.
+#
+# Verified against huggingface.co, <date>. Keep a short note of what
+# replaced what and why whenever you refresh this list — repo names and
+# "current SOTA in this size class" both drift fast in the VLM space.
+# =====================================================================
+
+# ── 1. Native omnimodal flagships (no separate mmproj needed) ──
+# These models handle interleaved modalities natively.
+
+# <org>/<model>-GGUF · <quant>                  # T1 | dense | ~GB | llama.cpp | EXAMPLE — natively multimodal, no mmproj needed
+
+# ── 2. Heavyweight visual reasoners (Tier 2/3) ──
+# Best-in-class for OCR, complex spatial reasoning, math-vision tasks.
+
+bartowski/Qwen_Qwen2.5-VL-72B-Instruct-GGUF · Q4_K_M   # EXAMPLE | T2 | 72B dense | ~47GB | llama.cpp (needs mmproj) | strong OCR/GUI-navigation VLM — check for a newer generation before committing, this space moves fast
+
+# ── 3. Midweight / high-efficiency (Tier 1) ──
+
+bartowski/Qwen_Qwen2.5-VL-7B-Instruct-GGUF · Q6_K      # EXAMPLE | T1 | 7B dense | ~5GB | llama.cpp (needs mmproj) | workhorse-class, best per-VRAM VLM at time of writing
+
+# ── 4. Edge (<=4B parameters) ──
+
+ggml-org/SmolVLM2-500M-Video-Instruct-GGUF · Q8_0      # EXAMPLE | T1 | 0.5B dense | ~500MB | llama.cpp (needs mmproj) | extreme efficiency, mobile/edge-class
+
+# ── 5. EXCLUDED / ARCHIVE (non-viable format, superseded, or no GGUF exists) ──
+# Keep dead ends here so you don't re-research them every refresh pass:
+
+# <org>/<model>                                 # EXAMPLE — real model, no GGUF/llama.cpp support confirmed as of <date>; check back periodically
+# <org>/<old-model>                              # EXAMPLE — superseded by <newer-model> above, still functions, just no longer current-gen

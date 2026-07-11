@@ -1,0 +1,60 @@
+# =====================================================================
+# SMALL MODELS (<10B TOTAL) — template
+# Everything under 10B total parameters, across whichever orgs ship
+# frontier-quality small/edge models. Sorted smallest -> largest. Fast
+# to download and worth having even outside the main serving queue —
+# good for quick tests, agent sub-tasks, embedding pipelines, or running
+# several side-by-side on one GPU.
+#
+# Format: RepoID (safetensors)  # note
+#         RepoID · quant         (GGUF companion, immediately below)
+#
+# Quant logic for this file specifically (everything here is small, so
+# bias toward quality over size) — adjust thresholds to taste:
+#   <2B    -> Q8_0              (near-lossless, download cost is trivial)
+#   2B-10B -> Q6_K / UD-Q6_K_XL (quality headroom, still small)
+#
+# TIERS: not labeled per-entry here — everything in this file is <10B
+# total by definition, trivially Tier 1 on the ladder used in models.txt.
+#
+# If an entry here is ALSO in your main models.txt/models-gguf.txt
+# (e.g. because it doubles as both a "priority family small size" and
+# a general small-model reference), note that inline so you don't
+# double-mirror it.
+#
+# Verified against huggingface.co, <date>.
+# =====================================================================
+
+# ── ~0.5-1B ──
+Qwen/Qwen3-0.6B                                # EXAMPLE | dense, unified thinking/non-thinking | confirmed exact
+unsloth/Qwen3-0.6B-GGUF · Q8_0                 # EXAMPLE — confirmed exact
+
+meta-llama/Llama-3.2-1B-Instruct               # EXAMPLE | dense, distilled from a larger sibling | confirmed exact
+unsloth/Llama-3.2-1B-Instruct-GGUF · Q8_0      # EXAMPLE — confirmed exact
+
+# ── ~3-4B ──
+Qwen/Qwen3-4B                                  # EXAMPLE | dense, unified thinking/non-thinking | confirmed exact
+unsloth/Qwen3-4B-GGUF · Q6_K                   # EXAMPLE — confirmed exact
+
+# ── ~7-9B ──
+Qwen/Qwen3-8B                                  # ALREADY in models.txt — note cross-references like this so you don't double-mirror
+unsloth/Qwen3-8B-GGUF · Q6_K                   # already in models-gguf.txt too, same quant tag used there
+
+# =====================================================================
+# DATASETS — companion training/eval data for the small models above,
+# where a distinct public repo exists. Optional section.
+#
+# NOTE: mirror-batch.sh (or whatever batch tool you use) applies one
+# --type flag to the WHOLE file — if this file defaults to --type model,
+# dataset lines below will NOT get pulled correctly by a plain batch
+# run. Pull them individually with an explicit --type dataset flag, or
+# keep datasets in their own file entirely (datasets.txt).
+# =====================================================================
+
+# HuggingFaceTB/smollm-corpus            # EXAMPLE — pretraining corpus (web+code+math+reasoning)
+
+# =====================================================================
+# Not included: anything MoE-based with TOTAL params over your small-
+# model cutoff even if active params are small (e.g. a 30B-A3B MoE) —
+# same total-param tiering logic as models.txt.
+# =====================================================================

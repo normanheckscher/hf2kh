@@ -1,0 +1,36 @@
+# =====================================================================
+# DISTILLED/ABLITERATED MODELS — template (optional file)
+# Community fine-tunes claiming distillation from a frontier model
+# (e.g. Claude/GPT/Gemini), frequently combined with abliteration/
+# uncensoring. Only relevant if that's part of your workflow — delete
+# this whole file if it isn't.
+# Format: RepoID · quant  # notes
+#
+# TIERS = TOTAL parameter footprint, not active params — same ladder as
+# models.txt.
+#
+# NOTE: Training derivative models on frontier AI outputs typically
+# violates those labs' terms of service. Models in this space are
+# experimental community research releases, not vendor-sanctioned
+# distillations — treat the "distilled from X" framing as a marketing
+# claim, not a verified fact, unless a specific model card documents
+# real training data.
+#
+# CAUTION ON PROVENANCE: repo names in this space commonly claim
+# lineage from a well-known frontier model. In practice the documented
+# training is often a public abliterated open-weight checkpoint with
+# the frontier-lab name added as branding after the fact. A recurring
+# naming pattern worth knowing: portmanteaus combining a base model
+# name with a frontier model's codename (e.g. "Qwen" + "Opus" ->
+# something like "Qwopus") show up across multiple unrelated uploaders
+# — treat this as a category to verify, not a red flag for any single
+# uploader specifically.
+#
+# Verified against huggingface.co, <date>. Note corrections/new finds
+# inline as you go — repo names in this space get renamed/reorganized
+# often, and single-uploader "collections" can be inconsistently named.
+# =====================================================================
+
+# ── Example entry format ──
+# <uploader>/<model>-abliterated · BF16          # T2 | dense | ~GB | unquantized safetensors
+# <uploader>/<model>-abliterated-GGUF · Q4_K_M   # T1 | dense | ~GB | note curator/method if known, and whether the "distilled from X" claim is documented or just branding
